@@ -4,6 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,11 +17,22 @@ public class MainActivity extends AppCompatActivity {
     public static final int RESULT_WELCOME = 11;
     public static final int LOGIN = 2;
     public static final int RESULT_LOGIN = 22;
+    ImageView img;
+    Button btnbd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        img = (ImageView) findViewById(R.id.imglogo);
+        btnbd = (Button) findViewById(R.id.btnbd);
+        btnbd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent1);
+            }
+        });
 
         intent = new Intent(this, WelcomeActivity.class);
         startActivityForResult(intent, WELCOME);
