@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cnscanner">
+    package="com.lqcuongnd.cnscanner">
 
     <application
         android:allowBackup="true"
@@ -9,20 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReportDetailActivity"></activity>
-        <activity android:name=".ReportManagementActivity" />
-        <activity android:name=".PersonalActivity" />
-        <activity android:name=".WelcomeActivity" />
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".ReportActivity" />
-        <activity android:name=".ScanningActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.AboutActivity"></activity>
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.InputActivity" />
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.RegisterActivity" />
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.ReportDetailActivity" />
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.ReportListActivity" />
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.PersonalActivity" />
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.SettingActivity" />
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.ReportActivity" />
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.LoginActivity" />
+        <activity android:name="com.lqcuongnd.cnscanner.Activities.MainActivity">
         </activity>
     </application>
 

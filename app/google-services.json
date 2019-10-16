@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "338186342470",
+    "firebase_url": "https://cn-scanner.firebaseio.com",
+    "project_id": "cn-scanner",
+    "storage_bucket": "cn-scanner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338186342470:android:51429d769784482748ba47",
+        "android_client_info": {
+          "package_name": "com.lqcuongnd.cnscanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338186342470-n2kc9v0bf3cba52tgv41141l74rcg2k8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lqcuongnd.cnscanner",
+            "certificate_hash": "f5f35b8ac342fa392d012aba8e7c7fffa5be0995"
+          }
+        },
+        {
+          "client_id": "338186342470-d8gepaliuqjfct9s229jnuem3mnkcmt6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDs1SbSs_yXEkAPSOgQLcrIc7RUEJbhbiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338186342470-d8gepaliuqjfct9s229jnuem3mnkcmt6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

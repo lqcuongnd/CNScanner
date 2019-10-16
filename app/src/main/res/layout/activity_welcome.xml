@@ -5,15 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".WelcomeActivity">
+    android:background="@android:color/white"
+    tools:context=".Activities.WelcomeActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="259dp"
         android:layout_height="250dp"
         android:layout_marginTop="150dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/blue_full_logo" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/loading"
+        />
 
 </LinearLayout>
