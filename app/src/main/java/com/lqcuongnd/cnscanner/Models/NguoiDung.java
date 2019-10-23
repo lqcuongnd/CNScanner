@@ -2,22 +2,26 @@ package com.lqcuongnd.cnscanner.Models;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
-import com.google.firebase.firestore.EventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.lqcuongnd.cnscanner.Activities.MainActivity;
+import com.lqcuongnd.cnscanner.Activities.LoginActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class NguoiDung implements Serializable {
 
@@ -30,7 +34,6 @@ public class NguoiDung implements Serializable {
     private boolean kichHoat;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Activity activity;
 
     public NguoiDung() {
     }
@@ -65,15 +68,16 @@ public class NguoiDung implements Serializable {
         this.kichHoat = Boolean.parseBoolean(user.get(0));
     }
 
+    public NguoiDung (Bundle bundle) {
 
-    public void set(NguoiDung user) {
-        this.tenDN = user.getTenDN();
-        this.matKhau = user.getMatKhau();
-        this.ten = user.getTen();
-        this.gioiTinh = user.getGioiTinh();
-        this.id = user.getId();
-        this.loai = user.getLoai();
-        this.kichHoat = user.getKichHoat();
+        this.tenDN = bundle.getString("tenDN", tenDN);
+        this.matKhau = bundle.getString("matKhau", matKhau);
+        this.ten = bundle.getString("ten", ten);
+        this.gioiTinh = bundle.getBoolean("gioiTinh", gioiTinh);
+        this.id = bundle.getString("id", id);
+        this.loai = bundle.getInt("loai", loai);
+        this.kichHoat = bundle.getBoolean("kichHoat", kichHoat);
+
     }
 
     public String getTenDN() {
@@ -174,39 +178,75 @@ public class NguoiDung implements Serializable {
         return bundle;
     }
 
-    public void login(Activity act) {
-        this.activity = act;
+    public void login(LoginActivity contextParent) {
 
-        db.collection("NGUOIDUNG").whereEqualTo("TenDN", id).whereEqualTo("MatKhau", matKhau).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Toast.makeText(activity, "Có lỗi xảy ra!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                for (QueryDocumentSnapshot doc : value) {
-                    if (doc.get("Ten") != null) {
+        LoginAsync loginAsync = new LoginAsync(contextParent);
+        loginAsync.execute();
 
-                        tenDN = (String) doc.get("TenDN");
-                        matKhau = (String) doc.get("MatKhau");
-                        ten = (String) doc.get("Ten");
-                        gioiTinh = (Boolean) doc.get("GioiTinh");
-                        id = (String) doc.get("Id").toString();
-                        loai = Integer.parseInt(doc.get("Loai").toString());
-                        kichHoat = (Boolean) doc.get("KichHoat");
-
-                        Toast.makeText(activity, "Xin chào " + ten, Toast.LENGTH_SHORT).show();
-
-                        Intent intent = activity.getIntent();
-                        /*Bundle bundle = new Bundle();
-                        bundle.putSerializable("user", new NguoiDung(tenDN, matKhau, ten, gioiTinh, id, loai, kichHoat));
-                        intent.putExtras(bundle);*/
-                        activity.setResult(MainActivity.RESULT_LOGIN, intent);
-                        activity.finish();
-                    }
-                }
-            }
-        });
     }
 
+    class LoginAsync extends AsyncTask<Void, Integer, Void> {
+        LoginActivity contextParent;
+        private FirebaseFirestore db = FirebaseFirestore.getInstance();
+        private Map<String, Object> u;
+        private Boolean isSuccess = false;
+
+        public LoginAsync(LoginActivity contextParent) {
+            this.contextParent = contextParent;
+        }
+
+        public Boolean getSuccess() {
+            return isSuccess;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(contextParent, "Đang kiểm tra thông tin ...", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            db.collection("NGUOIDUNG").whereEqualTo("TenDN", id).whereEqualTo("MatKhau", matKhau).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().size() > 0) {
+                            DocumentSnapshot document = task.getResult().getDocuments().get(0);
+
+                            u = document.getData();
+
+                            tenDN = (String) u.get("TenDN");
+                            matKhau = (String) u.get("MatKhau");
+                            ten = (String) u.get("Ten");
+                            gioiTinh = (Boolean) u.get("GioiTinh");
+                            id = (String) u.get("Id").toString();
+                            loai = Integer.parseInt(u.get("Loai").toString());
+                            kichHoat = (Boolean) u.get("KichHoat");
+
+                            publishProgress(1);
+                        } else {
+                            publishProgress(0);
+                        }
+                    } else {
+                        publishProgress(0);
+                    }
+                }
+            });
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... value) {
+            if (value[0] == 1)
+                isSuccess = true;
+            contextParent.checkLogin(isSuccess);
+        }
+
+        @Override
+        protected void onPostExecute(Void data) {
+            super.onPostExecute(data);
+        }
+    }
 }

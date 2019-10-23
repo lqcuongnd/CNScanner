@@ -5,21 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.lqcuongnd.cnscanner.Models.NguoiDung;
 import com.lqcuongnd.cnscanner.R;
-
 import java.util.ArrayList;
-
-import javax.annotation.Nonnull;
-
 import pl.droidsonroids.gif.GifImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     IntentIntegrator intentIntegrator;
 
     public static final int LOGIN = 2;
-    public static final int RESULT_LOGIN = 21;
     public static final int SCANNING = 3;
     public static final int RESULTOK_SCANNING = 31;
     public static final int LIST = 4;
@@ -138,35 +130,33 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         //get qrcode scan
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() != null) {
-                bundle = new Bundle();
-                bundle.putString("code", result.getContents());
-                intent = new Intent(MainActivity.this, InputActivity.class);
-                intent.putExtras(bundle);
-                startActivityForResult(intent, INPUT);
+        try {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (result != null) {
+                if (result.getContents() != null) {
+                    bundle = new Bundle();
+                    bundle.putString("code", result.getContents());
+                    intent = new Intent(MainActivity.this, InputActivity.class);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, INPUT);
+                }
             }
+        }
+        catch (Exception e){
+
         }
 
         switch (requestCode) {
             case LOGIN:
-                if (resultCode == RESULT_LOGIN) {
 
-                    Bundle bundle = data.getExtras();
+                Bundle bundle = data.getExtras();
 
-                    user.setTenDN(bundle.getString("tenDN"));
-                    user.setMatKhau(bundle.getString("matKhau"));
-                    user.setTen(bundle.getString("ten"));
-                    user.setTen(bundle.getString("gioiTinh"));
-                    user.setTen(bundle.getString("id"));
-                    user.setLoai(bundle.getInt("loai"));
-                    user.setKichHoat(bundle.getBoolean("kichHoat"));
+                user = new NguoiDung(bundle);
 
-                    Toast.makeText(this, "Hê nhô " + user.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Xin chào " + user.getTen(), Toast.LENGTH_SHORT).show();
 
-                }
                 break;
+
             case SCANNING:
                 if (resultCode == RESULTOK_SCANNING) {
 
@@ -187,8 +177,8 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + requestCode);
+            /*default:
+                throw new IllegalStateException("Unexpected value: " + requestCode);*/
         }
     }
 }

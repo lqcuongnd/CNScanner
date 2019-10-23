@@ -26,7 +26,21 @@
         android:layout_height="505dp"
         android:orientation="vertical">
 
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/imgloadingLogo"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/loading_logo"
+            android:visibility="gone"
+            />
+
         <ImageView
+            android:id="@+id/imgLogo"
             android:layout_marginTop="0dp"
             android:layout_width="220dp"
             android:layout_height="175dp"
