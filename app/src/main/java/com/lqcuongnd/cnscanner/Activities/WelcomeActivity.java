@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lqcuongnd.cnscanner.R;
@@ -17,31 +18,27 @@ public class WelcomeActivity extends AppCompatActivity {
         Thread timer = new Thread() {
             public void run() {
                 try {
-                    sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                }
-            }
-        };
-        Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show();
-        timer.start();
-
-        timer = new Thread() {
-            public void run() {
-                try {
-                    sleep(2000);
+                    sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
                     Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,1);
                 }
             }
         };
         Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show();
         timer.start();
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        switch (requestCode) {
+            case 1:
+                finish();
+                break;
+        }
     }
 }

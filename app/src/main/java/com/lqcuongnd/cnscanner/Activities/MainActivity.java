@@ -4,12 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.lqcuongnd.cnscanner.Models.NguoiDung;
 import com.lqcuongnd.cnscanner.R;
+
+import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
@@ -28,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
     Intent intent;
     Bundle bundle;
+    ArrayList<String> us;
+    NguoiDung user = new NguoiDung();
 
     IntentIntegrator intentIntegrator;
 
-    public static final int WELCOME = 1;
-    public static final int RESULT_WELCOME = 11;
     public static final int LOGIN = 2;
     public static final int RESULT_LOGIN = 21;
     public static final int SCANNING = 3;
@@ -43,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     public static final int RESULT_SETTING = 51;
     public static final int INPUT = 6;
     public static final int RESULT_INPUT = 61;
+
+    FirebaseFirestore db;
+    NguoiDung u;
     //Xong phần khai báo =====================================================================
 
     @Override
@@ -51,15 +61,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //run Login screen
-        if (!isLogged()) {
-            intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent, LOGIN);
-        }
+        //if (!isLogged()) {
+        intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, LOGIN);
+        //}
 
         //set Paletes
         setPalettes();
 
-        //set onClick
         setOnClick();
     }
 
@@ -113,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     //Hàm kiểm tra đã đăng nhập hay chưa
     private boolean isLogged() {
 
@@ -124,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nonnull Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         //get qrcode scan
@@ -140,12 +150,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         switch (requestCode) {
-            case WELCOME:
-                if (resultCode == RESULT_WELCOME) {
-                }
-                break;
             case LOGIN:
                 if (resultCode == RESULT_LOGIN) {
+
+                    Bundle bundle = data.getExtras();
+
+                    user.setTenDN(bundle.getString("tenDN"));
+                    user.setMatKhau(bundle.getString("matKhau"));
+                    user.setTen(bundle.getString("ten"));
+                    user.setTen(bundle.getString("gioiTinh"));
+                    user.setTen(bundle.getString("id"));
+                    user.setLoai(bundle.getInt("loai"));
+                    user.setKichHoat(bundle.getBoolean("kichHoat"));
+
+                    Toast.makeText(this, "Hê nhô " + user.toString(), Toast.LENGTH_SHORT).show();
 
                 }
                 break;
@@ -169,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + requestCode);
         }
     }
 }
