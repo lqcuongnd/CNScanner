@@ -7,12 +7,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.lqcuongnd.cnscanner.Models.NguoiDung;
+import com.lqcuongnd.cnscanner.Models.SQLite;
 import com.lqcuongnd.cnscanner.R;
-import java.util.ArrayList;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,27 +25,25 @@ public class MainActivity extends AppCompatActivity {
     ImageView btnSetting;
     ImageView btnAbout;
 
-    private boolean isWelcomed = false;
-
     Intent intent;
     Bundle bundle;
-    ArrayList<String> us;
     NguoiDung user = new NguoiDung();
+    SQLite sqLite;
 
     IntentIntegrator intentIntegrator;
 
     public static final int LOGIN = 2;
+    public static final int RESULT_OK_LOGIN = 21;
+    public static final int RESULT_CANCEL_LOGIN = 222;
     public static final int SCANNING = 3;
     public static final int RESULTOK_SCANNING = 31;
     public static final int LIST = 4;
     public static final int RESULT_LIST = 41;
     public static final int SETTING = 5;
-    public static final int RESULT_SETTING = 51;
+    public static final int RESULT_LOGOUT_SETTING = 51;
     public static final int INPUT = 6;
     public static final int RESULT_INPUT = 61;
 
-    FirebaseFirestore db;
-    NguoiDung u;
     //Xong phần khai báo =====================================================================
 
     @Override
@@ -53,10 +52,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //run Login screen
-        //if (!isLogged()) {
-        intent = new Intent(this, LoginActivity.class);
-        startActivityForResult(intent, LOGIN);
-        //}
+        sqLite = new SQLite(this);
+        if(!sqLite.isLogIn()){
+            intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, LOGIN);
+        }
+        else{
+            user = sqLite.getUser();
+            Toast.makeText(this, "Xin chào " + user.getTen(), Toast.LENGTH_SHORT).show();
+        }
 
         //set Paletes
         setPalettes();
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intent = new Intent(MainActivity.this, SettingActivity.class);
-                startActivityForResult(intent, LIST);
+                startActivityForResult(intent, SETTING);
             }
         });
         btnAbout.setOnClickListener(new View.OnClickListener() {
@@ -112,17 +116,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-
-    //Hàm kiểm tra đã đăng nhập hay chưa
-    private boolean isLogged() {
-
-        if (false) {
-            //Đã đăng nhập
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -143,17 +136,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         catch (Exception e){
-
         }
 
         switch (requestCode) {
             case LOGIN:
 
-                Bundle bundle = data.getExtras();
-
-                user = new NguoiDung(bundle);
-
-                Toast.makeText(this, "Xin chào " + user.getTen(), Toast.LENGTH_SHORT).show();
+                if(resultCode == RESULT_OK_LOGIN){
+                    Bundle bundle = data.getExtras();
+                    user = new NguoiDung(bundle);
+                    Toast.makeText(this, "Xin chào " + user.getTen(), Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    finish();
+                }
 
                 break;
 
@@ -168,8 +163,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case SETTING:
-                if (resultCode == RESULT_SETTING) {
-
+                if (resultCode == RESULT_LOGOUT_SETTING) {
+                    intent = new Intent(this, LoginActivity.class);
+                    startActivityForResult(intent, LOGIN);
                 }
                 break;
             case INPUT:
@@ -177,8 +173,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 break;
-            /*default:
-                throw new IllegalStateException("Unexpected value: " + requestCode);*/
         }
     }
 }

@@ -1,9 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/setting_br"
     tools:context=".Activities.SettingActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- <ImageView
+         android:id="@+id/imgBack"
+         android:layout_width="70dp"
+         android:layout_height="40dp"
+         android:layout_marginTop="15dp"
+         android:layout_gravity="center"
+         app:srcCompat="@drawable/back" />
+ -->
+    <TextView
+        android:id="@+id/lblCaiDat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textColor="#FFFFFF"
+        android:text="Cài đặt"
+        android:textSize="33dp"
+        android:layout_centerHorizontal="true" />
+
+
+    <ScrollView
+        android:layout_below="@+id/lblCaiDat"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarSize="@android:dimen/app_icon_size"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:background="@drawable/small_button_br"
+
+                >
+
+                <TextView
+                    android:id="@+id/lblDangXuat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="#4166F5"
+                    android:text="Đăng xuất"
+                    android:textSize="28dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:background="@drawable/small_button_br"
+
+                >
+
+                <TextView
+                    android:id="@+id/lblSuaThongTin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="#4166F5"
+                    android:text="Sửa thông tin tài khoản"
+                    android:textSize="28dp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!--<com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/gif"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:cropToPadding="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="setting.json"
+        app:lottie_loop="true"
+        app:lottie_speed="0.5" />-->
+
+
+</RelativeLayout>

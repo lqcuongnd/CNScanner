@@ -2,6 +2,7 @@ package com.lqcuongnd.cnscanner.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,8 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.lqcuongnd.cnscanner.Models.NguoiDung;
+import com.lqcuongnd.cnscanner.Models.SQLite;
 import com.lqcuongnd.cnscanner.R;
 import java.util.Map;
 import pl.droidsonroids.gif.GifImageView;
@@ -24,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     GifImageView imgloadingLogo;
     ImageView imgLogo;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    SQLite sqLite;
     String id;
     String pw;
     Map<String, Object> u;
@@ -46,7 +48,32 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        intent = getIntent();
+
         setPalletes();
+
+        setOnClick();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            setResult(MainActivity.RESULT_CANCEL_LOGIN, intent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void setPalletes() {
+        txtId = (EditText) findViewById(R.id.txtId);
+        txtPass = (EditText) findViewById(R.id.txtPass);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        lblRegister = (TextView) findViewById(R.id.lblRegister);
+        imgloadingLogo = (GifImageView) findViewById(R.id.imgloadingLogo);
+        imgLogo = (ImageView) findViewById(R.id.imgLogo);
+    }
+
+    private void setOnClick(){
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,11 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (id.compareTo("") != 0 && pw.compareTo("") != 0) {
                     user.setId(id);
                     user.setMatKhau(pw);
-
                     user.login(LoginActivity.this);
-
-                    /*loginAsyncTask = new LoginAsyncTask();
-                    loginAsyncTask.execute();*/
                 } else {
                     Toast.makeText(LoginActivity.this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
                 }
@@ -83,21 +106,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void setPalletes() {
-        txtId = (EditText) findViewById(R.id.txtId);
-        txtPass = (EditText) findViewById(R.id.txtPass);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        lblRegister = (TextView) findViewById(R.id.lblRegister);
-        imgloadingLogo = (GifImageView) findViewById(R.id.imgloadingLogo);
-        imgLogo = (ImageView) findViewById(R.id.imgLogo);
-    }
-
     public void checkLogin(Boolean b){
         if(b){
-            intent = getIntent();
             bundle = user.getBundle();
             intent.putExtras(bundle);
-            setResult(11, intent);
+            setResult(MainActivity.RESULT_OK_LOGIN, intent);
+            sqLite = new SQLite(this);
+            sqLite.logIn(user);
             finish();
         }
         else{

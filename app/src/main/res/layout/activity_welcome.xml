@@ -1,29 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/white"
     tools:context=".Activities.WelcomeActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="259dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="150dp"
-        android:layout_gravity="center"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/blue_full_logo" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="230dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        >
 
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:scaleType="fitCenter"
-        android:src="@drawable/loading"
-        />
+        <!--<pl.droidsonroids.gif.GifImageView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/loadingwc"
+            />-->
 
-</LinearLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/gif"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:cropToPadding="true"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="-30dp"
+
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_fileName="scanning.json"
+            app:lottie_speed="2" />
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="269dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/blue_content_logo"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

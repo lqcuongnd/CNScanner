@@ -6,39 +6,37 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.lqcuongnd.cnscanner.R;
 
 public class WelcomeActivity extends AppCompatActivity {
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        intent = new Intent(WelcomeActivity.this, MainActivity.class);
+
         Thread timer = new Thread() {
             public void run() {
                 try {
-                    sleep(10);
+                    sleep(2000);
+                    startActivityForResult(intent, 1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-                    startActivityForResult(intent,1);
                 }
             }
         };
-        Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show();
         timer.start();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case 1:
-                finish();
-                break;
-        }
+        finish();
     }
 }
