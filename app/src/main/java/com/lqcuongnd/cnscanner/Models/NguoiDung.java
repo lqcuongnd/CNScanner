@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -12,13 +13,16 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.lqcuongnd.cnscanner.Activities.LoginActivity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import pl.droidsonroids.gif.GifImageView;
@@ -32,6 +36,7 @@ public class NguoiDung implements Serializable {
     private String id;
     private int loai;
     private boolean kichHoat;
+    private String documentID;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -68,7 +73,7 @@ public class NguoiDung implements Serializable {
         this.kichHoat = Boolean.parseBoolean(user.get(0));
     }
 
-    public NguoiDung (Bundle bundle) {
+    public NguoiDung(Bundle bundle) {
 
         this.tenDN = bundle.getString("tenDN", tenDN);
         this.matKhau = bundle.getString("matKhau", matKhau);
@@ -134,6 +139,14 @@ public class NguoiDung implements Serializable {
 
     public void setKichHoat(boolean kichHoat) {
         this.kichHoat = kichHoat;
+    }
+
+    public String getDocumentID() {
+        return documentID;
+    }
+
+    public void setDocumentID(String documentID) {
+        this.documentID = documentID;
     }
 
     @Override
@@ -217,6 +230,7 @@ public class NguoiDung implements Serializable {
 
                             u = document.getData();
 
+                            documentID = document.getId();
                             tenDN = (String) u.get("TenDN");
                             matKhau = (String) u.get("MatKhau");
                             ten = (String) u.get("Ten");

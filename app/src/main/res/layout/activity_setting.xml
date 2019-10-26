@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/setting_br"
+    android:background="@drawable/ic_login"
     tools:context=".Activities.SettingActivity">
 
     <!-- <ImageView
@@ -15,63 +15,73 @@
          android:layout_gravity="center"
          app:srcCompat="@drawable/back" />
  -->
+
     <TextView
         android:id="@+id/lblCaiDat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:text="Cài đặt"
-        android:textSize="33dp"
-        android:layout_centerHorizontal="true" />
+        android:textColor="#FFFFFF"
+        android:textSize="33dp" />
+
+
+    <FrameLayout
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp">
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/gif"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|bottom"
+            android:cropToPadding="true"
+
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="white_loading.json"
+            app:lottie_loop="true"
+            app:lottie_speed="1.5" />
+
+
+        <TextView
+            android:id="@+id/lblTen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="C"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+
+    </FrameLayout>
 
 
     <ScrollView
-        android:layout_below="@+id/lblCaiDat"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbarSize="@android:dimen/app_icon_size"
-        >
+        android:layout_below="@+id/lblCaiDat"
+        android:layout_marginTop="30dp"
+        android:scrollbarSize="@android:dimen/app_icon_size">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="30dp"
+                android:background="@drawable/big_button_br"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:background="@drawable/small_button_br"
-
-                >
-
-                <TextView
-                    android:id="@+id/lblDangXuat"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textColor="#4166F5"
-                    android:text="Đăng xuất"
-                    android:textSize="28dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:background="@drawable/small_button_br"
 
                 >
 
@@ -80,12 +90,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textColor="#4166F5"
                     android:text="Sửa thông tin tài khoản"
-                    android:textSize="28dp" />
+                    android:textColor="#4166F5"
+                    android:textSize="26dp" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/big_button_br"
+                android:gravity="center"
+                android:orientation="horizontal"
+
+                >
+
+                <TextView
+                    android:id="@+id/btnDangXuat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Đăng xuất"
+                    android:textColor="#4166F5"
+                    android:textSize="26dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

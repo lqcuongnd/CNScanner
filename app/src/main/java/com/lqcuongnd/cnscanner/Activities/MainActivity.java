@@ -2,17 +2,27 @@ package com.lqcuongnd.cnscanner.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.lqcuongnd.cnscanner.Models.NguoiDung;
 import com.lqcuongnd.cnscanner.Models.SQLite;
 import com.lqcuongnd.cnscanner.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import pl.droidsonroids.gif.GifImageView;
 

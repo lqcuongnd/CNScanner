@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -14,7 +15,8 @@ import com.lqcuongnd.cnscanner.R;
 
 public class SettingActivity extends AppCompatActivity {
 
-    TextView lblDangXuat;
+    TextView btnDangXuat;
+    TextView lblTen;
     SQLite sqLite;
 
     @Override
@@ -27,12 +29,18 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void setPalletes() {
-        lblDangXuat = (TextView) findViewById(R.id.lblDangXuat);
+        sqLite = new SQLite(SettingActivity.this);
+        btnDangXuat = (TextView) findViewById(R.id.btnDangXuat);
+        lblTen = (TextView) findViewById(R.id.lblTen);
+
+        String[] name = sqLite.getUser().getTen().split(" ");
+        char n = name[name.length - 1].charAt(0);
+        lblTen.setText(n + "");
 
     }
 
     private void setOnClick() {
-        lblDangXuat.setOnClickListener(new View.OnClickListener() {
+        btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -57,7 +65,6 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void logOut() {
-        sqLite = new SQLite(SettingActivity.this);
         sqLite.logOut();
         Intent intent = getIntent();
         setResult(MainActivity.RESULT_LOGOUT_SETTING, intent);
