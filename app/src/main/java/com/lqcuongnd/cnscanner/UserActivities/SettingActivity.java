@@ -1,23 +1,26 @@
-package com.lqcuongnd.cnscanner.Activities;
+package com.lqcuongnd.cnscanner.UserActivities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.lqcuongnd.cnscanner.Models.NguoiDung;
 import com.lqcuongnd.cnscanner.Models.SQLite;
 import com.lqcuongnd.cnscanner.R;
 
 public class SettingActivity extends AppCompatActivity {
 
+    public static final int ACOUNT = 1;
+
     TextView btnDangXuat;
+    TextView btnSuaThongTin;
     TextView lblTen;
-    SQLite sqLite;
+    SQLite   sqLite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class SettingActivity extends AppCompatActivity {
 
     private void setPalletes() {
         sqLite = new SQLite(SettingActivity.this);
+        btnSuaThongTin = (TextView) findViewById(R.id.btnSuaThongTin);
         btnDangXuat = (TextView) findViewById(R.id.btnDangXuat);
         lblTen = (TextView) findViewById(R.id.lblTen);
 
@@ -40,6 +44,21 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void setOnClick() {
+
+        btnSuaThongTin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NguoiDung nguoiDung = sqLite.getUser();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", nguoiDung);
+
+                Intent intent = new Intent(SettingActivity.this, AccountActivity.class);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, ACOUNT);
+            }
+        });
+
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

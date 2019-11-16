@@ -1,9 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.ReportListActivity">
+    android:orientation="vertical"
+    tools:context=".UserActivities.InputActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/lbl"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#4166F5"
+        android:gravity="center"
+        android:text="Danh sách báo cáo đã tạo"
+        android:textColor="#FFFFFF"
+        android:textSize="28dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <Spinner
+            android:id="@+id/spinSapXep"
+            android:layout_width="wrap_content"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_alignParentLeft="true"
+            android:entries="@array/sap_xep" />
+
+        <Spinner
+            android:id="@+id/spinTrangThai"
+            android:layout_width="wrap_content"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:entries="@array/sort_type" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/lblEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="26dp"
+        android:layout_gravity="center"
+        android:text="Bạn chưa tạo báo cáo nào!!!"
+        android:visibility="gone"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reportList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

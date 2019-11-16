@@ -1,16 +1,16 @@
-package com.lqcuongnd.cnscanner.Activities;
-
-import android.os.Bundle;
+package com.lqcuongnd.cnscanner.TechnicianActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Bundle;
+
 import com.lqcuongnd.cnscanner.R;
 
-public class PersonalActivity extends AppCompatActivity {
+public class TechnicianMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personal);
+        setContentView(R.layout.activity_technician_main);
     }
 }

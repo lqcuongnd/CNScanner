@@ -9,8 +9,9 @@
     >
 
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/ic_login">
 
         <LinearLayout
@@ -30,14 +31,16 @@
                 android:src="@drawable/loading_logo"
                 android:visibility="gone" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/imgLogo"
-                android:layout_width="220dp"
-                android:layout_height="175dp"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/white_logo" />
+                android:gravity="center"
+                android:text="Cập nhật tài khoản"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp" />
 
             <EditText
                 android:id="@+id/txtTenDN"
@@ -98,17 +101,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:background="#FFFFFF"
-                    >
+                    android:background="#FFFFFF">
 
                     <Button
                         android:id="@+id/btnSinhvien"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="5dp"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
                         android:background="#4166F5"
                         android:text="sinh viên"
                         android:textColor="#FFFFFF"
@@ -120,11 +122,11 @@
                         android:id="@+id/btnGiangVien"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="5dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
                         android:background="#e3dae2"
                         android:text="giảng viên"
                         android:textColor="#f200ad"
@@ -171,17 +173,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:background="#FFFFFF"
-                    >
+                    android:background="#FFFFFF">
 
                     <Button
                         android:id="@+id/btnNam"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="5dp"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
                         android:background="#4166F5"
                         android:text="nam"
                         android:textColor="#FFFFFF"
@@ -193,11 +194,11 @@
                         android:id="@+id/btnNu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="5dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
                         android:background="#e3dae2"
                         android:text="nữ"
                         android:textColor="#f200ad"
@@ -212,23 +213,28 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnDangKy"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
-                android:background="@drawable/register_btn"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Đăng ký"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="23dp" />
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:background="#4166F5"
+                    android:text="Cập nhật"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
+
+
+            </LinearLayout>
+
         </LinearLayout>
+
 
     </ScrollView>
 
-
 </RelativeLayout>
+
+

@@ -1,9 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.ReportDetailActivity">
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".UserActivities.ReportDetailActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/lblSuaTaiKhoan"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="1"
+        android:background="#4166F5"
+        android:gravity="center"
+        android:text="Chi tiết báo cáo"
+        android:textColor="#FFFFFF"
+        android:textSize="30dp" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <TextView
+                android:id="@+id/lblNgay"
+                android:layout_width="match_parent"
+                android:layout_height="59dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="left|center"
+                android:text="Ngày tạo: "
+                android:textColor="#05a325"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/lblTenPhong"
+                android:layout_below="@+id/lblNgay"
+                android:layout_width="120dp"
+                android:layout_height="59dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="left|center"
+                android:text="Phòng: "
+                android:textColor="#4166F5"
+                android:textSize="24dp" />
+
+            <EditText
+                android:id="@+id/txtPhong"
+                android:layout_below="@+id/lblNgay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_toRightOf="@id/lblTenPhong"
+                android:hint="Tên phòng"
+                android:textSize="24dp"
+                android:editable="false"
+
+                
+                />
+
+            <TextView
+                android:id="@+id/lblLoi"
+                android:layout_width="120dp"
+                android:layout_height="59dp"
+                android:layout_below="@+id/lblTenPhong"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:gravity="left|center"
+                android:text="Vấn đề: "
+                android:textColor="#4166F5"
+                android:textSize="24dp" />
+
+            <AutoCompleteTextView
+                android:id="@+id/txtLoi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtPhong"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                android:layout_toRightOf="@id/lblLoi"
+                android:hint="Lỗi"
+                android:textSize="24dp"
+                android:focusable="false"/>
+
+            <TextView
+                android:id="@+id/lblChiTiet"
+                android:layout_width="120dp"
+                android:layout_height="59dp"
+                android:layout_below="@+id/lblLoi"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:gravity="left|center"
+                android:text="Chi tiết: "
+                android:textColor="#4166F5"
+                android:textSize="24dp" />
+
+            <EditText
+                android:id="@+id/txtChiTiet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtLoi"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="15dp"
+                android:layout_toRightOf="@id/lblLoi"
+
+                android:gravity="left"
+                android:hint="Thông tin chi tiết"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:textSize="24dp"
+                android:focusable="false"
+                />
+
+            <TextView
+                android:id="@+id/lblChuThich"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtChiTiet"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:gravity="left|center"
+                android:text="Ghi chú: "
+                android:textColor="#4166F5"
+                android:textSize="24dp" />
+
+            <EditText
+                android:id="@+id/txtChuThich"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtChiTiet"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="15dp"
+                android:layout_toRightOf="@id/lblLoi"
+
+                android:gravity="left"
+                android:hint="Không có chú thích"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:textSize="24dp"
+                android:focusable="false"/>
+
+            <TextView
+                android:id="@+id/lblTrangThai"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtChuThich"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp"
+                android:gravity="left|center"
+                android:text="Trạng thái: "
+                android:textColor="#4166F5"
+                android:textSize="24dp" />
+
+            <EditText
+                android:id="@+id/txtTrangThai"
+                android:layout_below="@id/txtChuThich"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_toRightOf="@id/lblTenPhong"
+                android:hint="Trạng thái"
+                android:textSize="24dp"
+                android:focusable="false"
+                android:textColor="#ad321f"
+                android:textStyle="bold"
+
+                />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_margin="7dp"
+        android:layout_weight="2"
+        android:background="#4166F5"
+        android:text="Trở về"
+        android:textColor="#FFFFFF"
+        android:textSize="24dp" />
+
+</LinearLayout>

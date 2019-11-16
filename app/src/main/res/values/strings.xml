@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CNScanner</string>
+    <string-array name="sort_type">
+        <item>Tất cả</item>
+        <item>Chưa xử lý</item>
+        <item>Đang xử lý</item>
+        <item>Đã xử lý</item>
+    </string-array>
+    <string-array name="sap_xep">
+        <item>Mới nhất trước</item>
+        <item>Chưa xử lý trước</item>
+    </string-array>
 </resources>

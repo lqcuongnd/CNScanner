@@ -1,44 +1,19 @@
 package com.lqcuongnd.cnscanner.Models;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.lqcuongnd.cnscanner.Activities.LoginActivity;
-
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
-
-import pl.droidsonroids.gif.GifImageView;
 
 public class NguoiDung implements Serializable {
 
-    private String tenDN;
-    private String matKhau;
-    private String ten;
+    private String  tenDN;
+    private String  matKhau;
+    private String  ten;
     private boolean gioiTinh;
-    private String id;
-    private int loai;
+    private String  id;
+    private int     loai;
     private boolean kichHoat;
-    private String documentID;
-
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String  documentID;
 
     public NguoiDung() {
     }
@@ -82,7 +57,7 @@ public class NguoiDung implements Serializable {
         this.id = bundle.getString("id", id);
         this.loai = bundle.getInt("loai", loai);
         this.kichHoat = bundle.getBoolean("kichHoat", kichHoat);
-
+        documentID = bundle.getString("documentID", documentID);
     }
 
     public String getTenDN() {
@@ -103,6 +78,11 @@ public class NguoiDung implements Serializable {
 
     public String getTen() {
         return ten;
+    }
+
+    public String getOnlyTen() {
+        String[] abc = this.ten.split(" ");
+        return abc[abc.length - 1];
     }
 
     public void setTen(String ten) {
@@ -187,80 +167,9 @@ public class NguoiDung implements Serializable {
         bundle.putString("id", id);
         bundle.putInt("loai", loai);
         bundle.putBoolean("kichHoat", kichHoat);
+        bundle.putString("documentID", documentID);
 
         return bundle;
     }
 
-    public void login(LoginActivity contextParent) {
-
-        LoginAsync loginAsync = new LoginAsync(contextParent);
-        loginAsync.execute();
-
-    }
-
-    class LoginAsync extends AsyncTask<Void, Integer, Void> {
-        LoginActivity contextParent;
-        private FirebaseFirestore db = FirebaseFirestore.getInstance();
-        private Map<String, Object> u;
-        private Boolean isSuccess = false;
-
-        public LoginAsync(LoginActivity contextParent) {
-            this.contextParent = contextParent;
-        }
-
-        public Boolean getSuccess() {
-            return isSuccess;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(contextParent, "Đang kiểm tra thông tin ...", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            db.collection("NGUOIDUNG").whereEqualTo("TenDN", id).whereEqualTo("MatKhau", matKhau).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().size() > 0) {
-                            DocumentSnapshot document = task.getResult().getDocuments().get(0);
-
-                            u = document.getData();
-
-                            documentID = document.getId();
-                            tenDN = (String) u.get("TenDN");
-                            matKhau = (String) u.get("MatKhau");
-                            ten = (String) u.get("Ten");
-                            gioiTinh = (Boolean) u.get("GioiTinh");
-                            id = (String) u.get("Id").toString();
-                            loai = Integer.parseInt(u.get("Loai").toString());
-                            kichHoat = (Boolean) u.get("KichHoat");
-
-                            publishProgress(1);
-                        } else {
-                            publishProgress(0);
-                        }
-                    } else {
-                        publishProgress(0);
-                    }
-                }
-            });
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... value) {
-            if (value[0] == 1)
-                isSuccess = true;
-            contextParent.checkLogin(isSuccess);
-        }
-
-        @Override
-        protected void onPostExecute(Void data) {
-            super.onPostExecute(data);
-        }
-    }
 }

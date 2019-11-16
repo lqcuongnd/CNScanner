@@ -9,8 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 public class SQLite extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "myPetDB.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "cnScanner.db";
+    public static final int DATABASE_VERSION = 2;
     public static final String TABLE_NGUOIDUNG = "tblUser";
     public static final String COL_ND_TENDN = "colTenDN";
     public static final String COL_ND_MATKHAU = "colMatkhau";
@@ -32,17 +32,7 @@ public class SQLite extends SQLiteOpenHelper {
         ArrayList<String> queries = new ArrayList<String>();
         queries.add("create table " + TABLE_NGUOIDUNG + "(" + COL_ND_TENDN + " TEXT PRIMARY KEY, " + COL_ND_MATKHAU + " TEXT, " + COL_ND_TEN
                 + " TEXT, " + COL_ND_GIOITINH + " INTEGER, " + COL_ND_ID + " TEXT, " + COL_ND_LOAI + " INTEGER, " + COL_ND_KICHHOAT + " INTEGER)");
-
-        /*arr[0] = String.format("create table %s(%s INTEGER PRIMARY KEY AUTOINCREMENT,%s TEXT, %s TEXT)", PETS_TABLE_NAME, PETS_COLUMN_CODE, PETS_COLUMN_NAME, PETS_COLUMN_BREED);
-        arr[1] = String.format("insert into %s(%s, %s) values('%s', '%s')", PETS_TABLE_NAME, PETS_COLUMN_NAME, PETS_COLUMN_BREED, "Vàng", "Chó cỏ");
-        arr[2] = String.format("insert into %s(%s, %s) values('%s', '%s')", PETS_TABLE_NAME, PETS_COLUMN_NAME, PETS_COLUMN_BREED, "Milu", "Chó đốm");
-        arr[3] = String.format("insert into %s(%s, %s) values('%s', '%s')", PETS_TABLE_NAME, PETS_COLUMN_NAME, PETS_COLUMN_BREED, "Mỡ", "Chó Husky");
-        arr[4] = String.format("insert into %s(%s, %s) values('%s', '%s')", PETS_TABLE_NAME, PETS_COLUMN_NAME, PETS_COLUMN_BREED, "Quàng Thượng", "Mèo mướp");
-        arr[5] = String.format("insert into %s(%s, %s) values('%s', '%s')", PETS_TABLE_NAME, PETS_COLUMN_NAME, PETS_COLUMN_BREED, "Bụn", "Chó Shiba");
-        arr[6] = String.format("insert into %s(%s, %s) values('%s', '%s')", PETS_TABLE_NAME, PETS_COLUMN_NAME, PETS_COLUMN_BREED, "Kyhuahua", "Chó bull");
-        arr[7] = String.format("insert into %s(%s, %s) values('%s', '%s')", PETS_TABLE_NAME, PETS_COLUMN_NAME, PETS_COLUMN_BREED, "Bốp", "Chó cỏ");
-        arr[8] = String.format("insert into %s(%s, %s) values('%s', '%s')", PETS_TABLE_NAME, PETS_COLUMN_NAME, PETS_COLUMN_BREED, "Méo", "Mèo tam hoàng");
-*/
+        queries.add("create table baocao(ma TEXT PRIMARY KEY,  ngay TEXT,  phong TEXT, loi TEXT, chitiet TEXT, chuthich TEXT, trangthai TEXT)");
 
         for (String s : queries)
             db.execSQL(s);
@@ -98,6 +88,46 @@ public class SQLite extends SQLiteOpenHelper {
         if(res.moveToFirst())
             return  true;
         return false;
+    }
+
+    public void putNotiBaoCao(BaoCao baoCao){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("ma", baoCao.getMa());
+        values.put("ngay", baoCao.getThoiGian());
+        values.put("phong", baoCao.getTenPhong());
+        values.put("loi", baoCao.getLoi());
+        values.put("chitiet", baoCao.getChiTiet());
+        values.put("chuthich", baoCao.getChuThich());
+        values.put("trangthai", baoCao.getTrangThai());
+
+        db.insert("baocao", null, values);
+        db.close();
+    }
+
+    public BaoCao getNotiBaoCao() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        BaoCao baoCao;
+        Cursor res = db.rawQuery("select * from baocao", null);
+        boolean b = res.moveToNext();
+        baoCao = new BaoCao();
+        baoCao.setThoiGian(res.getString(res.getColumnIndex("ngay")));
+        baoCao.setTenPhong(res.getString(res.getColumnIndex("phong")));
+        baoCao.setLoi(res.getString(res.getColumnIndex("loi")));
+        baoCao.setChiTiet(res.getString(res.getColumnIndex("chitiet")));
+        baoCao.setChuThich(res.getString(res.getColumnIndex("chuthich")));
+        baoCao.setTrangThai(res.getString(res.getColumnIndex("trangthai")));
+
+        db.close();
+
+        return baoCao;
+    }
+
+    public void removeNotiBaoCao(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("baocao", null, null);
     }
 
 }

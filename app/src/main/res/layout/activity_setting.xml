@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_login"
-    tools:context=".Activities.SettingActivity">
+    tools:context=".UserActivities.SettingActivity">
 
     <!-- <ImageView
          android:id="@+id/imgBack"
@@ -17,7 +17,7 @@
  -->
 
     <TextView
-        android:id="@+id/lblCaiDat"
+        android:id="@+id/lblSuaTaiKhoan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -65,7 +65,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/lblCaiDat"
+        android:layout_below="@+id/lblSuaTaiKhoan"
         android:layout_marginTop="30dp"
         android:scrollbarSize="@android:dimen/app_icon_size">
 
@@ -86,7 +86,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/lblSuaThongTin"
+                    android:id="@+id/btnSuaThongTin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"

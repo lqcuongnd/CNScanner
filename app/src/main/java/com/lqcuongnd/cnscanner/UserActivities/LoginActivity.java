@@ -1,4 +1,4 @@
-package com.lqcuongnd.cnscanner.Activities;
+package com.lqcuongnd.cnscanner.UserActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,28 +9,33 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.lqcuongnd.cnscanner.Firebase.Firebase;
 import com.lqcuongnd.cnscanner.Models.NguoiDung;
 import com.lqcuongnd.cnscanner.Models.SQLite;
 import com.lqcuongnd.cnscanner.R;
+
 import java.util.Map;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText txtId;
-    EditText txtPass;
-    Button btnLogin;
-    TextView lblRegister;
+    EditText     txtId;
+    EditText     txtPass;
+    Button       btnLogin;
+    TextView     lblRegister;
     GifImageView imgloadingLogo;
-    ImageView imgLogo;
+    ImageView    imgLogo;
 
-    SQLite sqLite;
-    String id;
-    String pw;
+    SQLite              sqLite;
+    String              id;
+    String              pw;
     Map<String, Object> u;
-    NguoiDung user;
+    NguoiDung           user;
 
     Intent intent = null;
     Bundle bundle = null;
@@ -73,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         imgLogo = (ImageView) findViewById(R.id.imgLogo);
     }
 
-    private void setOnClick(){
+    private void setOnClick() {
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +95,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (id.compareTo("") != 0 && pw.compareTo("") != 0) {
                     user.setId(id);
                     user.setMatKhau(pw);
-                    user.login(LoginActivity.this);
+
+                    Firebase firebase = new Firebase();
+                    firebase.dangNhap(user,LoginActivity.this);
+
+                    //user.login(LoginActivity.this);
                 } else {
                     Toast.makeText(LoginActivity.this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
                 }
@@ -101,21 +110,27 @@ public class LoginActivity extends AppCompatActivity {
         lblRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }
 
-    public void checkLogin(Boolean b){
-        if(b){
+    public void checkLogin(int result) {
+        if (result == 1) {
             bundle = user.getBundle();
             intent.putExtras(bundle);
             setResult(MainActivity.RESULT_OK_LOGIN, intent);
             sqLite = new SQLite(this);
             sqLite.logIn(user);
+            Toast.makeText(this, "Xin chào " + user.getTen(), Toast.LENGTH_SHORT).show();
             finish();
-        }
-        else{
+        } else if (result == -1){
+            Toast.makeText(LoginActivity.this, "Sai mật khẩu", Toast.LENGTH_SHORT).show();
+            txtPass.setText("");
+            imgLogo.setVisibility(View.VISIBLE);
+            imgloadingLogo.setVisibility(View.GONE);
+        } else {
             Toast.makeText(LoginActivity.this, "Vui lòng xem lại thông tin đăng nhập", Toast.LENGTH_SHORT).show();
             txtId.setText("");
             txtPass.setText("");
@@ -124,67 +139,20 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /*private class LoginAsyncTask extends AsyncTask<Void, Integer, Void> {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        public LoginAsyncTask() {
-        }
+        if(requestCode == 1){
+            if(resultCode == 1){
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(LoginActivity.this, "Đang kiểm tra thông tin ...", Toast.LENGTH_SHORT).show();
-        }
+            }
+            else{
 
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            db.collection("NGUOIDUNG").whereEqualTo("TenDN", user.getId()).whereEqualTo("MatKhau", user.getMatKhau()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().size() > 0) {
-                            DocumentSnapshot document = task.getResult().getDocuments().get(0);
-                            u = document.getData();
-
-                            user.setTenDN((String) u.get("TenDN"));
-                            user.setMatKhau((String) u.get("MatKhau"));
-                            user.setTen((String) u.get("Ten"));
-                            user.setGioiTinh((Boolean) u.get("GioiTinh"));
-                            user.setId((String) u.get("Id").toString());
-                            user.setLoai(Integer.parseInt(u.get("Loai").toString()));
-                            user.setKichHoat((Boolean) u.get("KichHoat"));
-
-                            publishProgress(1);
-                        } else {
-                            publishProgress(0);
-                        }
-                    } else {
-                        publishProgress(0);
-                    }
-                }
-            });
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... value) {
-            if (value[0] == 1) {
-                intent = getIntent();
-                bundle = user.getBundle();
-                intent.putExtras(bundle);
-                setResult(11, intent);
-                finish();
-            } else {
-                Toast.makeText(LoginActivity.this, "Vui lòng kiểm tra lại", Toast.LENGTH_SHORT).show();
-                txtId.setText("");
-                txtPass.setText("");
             }
         }
 
-        @Override
-        protected void onPostExecute(Void data) {
-            super.onPostExecute(data);
-        }
-    }*/
+    }
+
 }
 

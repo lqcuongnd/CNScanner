@@ -6,26 +6,27 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.AboutActivity" />
-        <activity android:name=".Activities.InputActivity" />
-        <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.WelcomeActivity">
+        <activity android:name=".TechnicianActivities.TechnicianMainActivity"></activity>
+        <activity android:name=".UserActivities.KTVActivity" />
+        <activity android:name=".UserActivities.AccountActivity" />
+        <activity android:name=".UserActivities.AboutActivity" />
+        <activity android:name=".UserActivities.InputActivity" />
+        <activity android:name=".UserActivities.RegisterActivity" />
+        <activity android:name=".UserActivities.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.ReportDetailActivity" />
-        <activity android:name=".Activities.ReportListActivity" />
-        <activity android:name=".Activities.PersonalActivity" />
-        <activity android:name=".Activities.SettingActivity" />
-        <activity android:name=".Activities.ReportActivity" />
-        <activity android:name=".Activities.LoginActivity" />
-        <activity android:name=".Activities.MainActivity"></activity>
+        <activity android:name=".UserActivities.ReportDetailActivity" />
+        <activity android:name=".UserActivities.LoginActivity" />
+        <activity android:name=".UserActivities.ReportListActivity" />
+        <activity android:name=".UserActivities.SettingActivity" />
+        <activity android:name=".UserActivities.MainActivity" />
     </application>
 
 </manifest>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.LoginActivity">
+    tools:context=".UserActivities.LoginActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,8 +13,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_login" />
     </LinearLayout>
@@ -25,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="505dp"
         android:orientation="vertical">
-
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/imgloadingLogo"
@@ -60,6 +58,7 @@
             android:layout_height="?actionBarSize"
             android:background="@drawable/rounded_corner"
             android:textSize="17sp" />
+
         <EditText
             android:id="@+id/txtPass"
             android:textColor="#fff"

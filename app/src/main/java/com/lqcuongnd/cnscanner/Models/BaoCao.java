@@ -1,29 +1,35 @@
 package com.lqcuongnd.cnscanner.Models;
 
-import net.sourceforge.jtds.jdbc.DateTime;
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-public class BaoCao {
-    String ma;
-    DateTime thoiGian;
-    String maPhong;
-    String maThietBi;
-    String maND;
-    String maLoi;
-    String chiTiet;
-    String trangThai;
-    String chuThich;
-    String maKTV;
+public class BaoCao implements Serializable {
+
+    private String ma;
+    private String thoiGian;
+    private String tenPhong;
+    private String maThietBi;
+    private String maND;
+    private String loi;
+    private String chiTiet;
+    private String trangThai;
+    private String chuThich;
+    private String maKTV;
 
     public BaoCao() {
     }
 
-    public BaoCao(String ma, DateTime thoiGian, String maPhong, String maThietBi, String maND, String maLoi, String chiTiet, String trangThai, String chuThich, String maKTV) {
+    public BaoCao(String ma, String thoiGian, String tenPhong, String maThietBi, String maND, String loi, String chiTiet, String trangThai, String chuThich, String maKTV) {
         this.ma = ma;
         this.thoiGian = thoiGian;
-        this.maPhong = maPhong;
+        this.tenPhong = tenPhong;
         this.maThietBi = maThietBi;
         this.maND = maND;
-        this.maLoi = maLoi;
+        this.loi = loi;
         this.chiTiet = chiTiet;
         this.trangThai = trangThai;
         this.chuThich = chuThich;
@@ -38,20 +44,20 @@ public class BaoCao {
         this.ma = ma;
     }
 
-    public DateTime getThoiGian() {
+    public String getThoiGian() {
         return thoiGian;
     }
 
-    public void setThoiGian(DateTime thoiGian) {
+    public void setThoiGian(String thoiGian) {
         this.thoiGian = thoiGian;
     }
 
-    public String getMaPhong() {
-        return maPhong;
+    public String getTenPhong() {
+        return tenPhong;
     }
 
-    public void setMaPhong(String maPhong) {
-        this.maPhong = maPhong;
+    public void setTenPhong(String tenPhong) {
+        this.tenPhong = tenPhong;
     }
 
     public String getMaThietBi() {
@@ -70,12 +76,12 @@ public class BaoCao {
         this.maND = maND;
     }
 
-    public String getMaLoi() {
-        return maLoi;
+    public String getLoi() {
+        return loi;
     }
 
-    public void setMaLoi(String maLoi) {
-        this.maLoi = maLoi;
+    public void setLoi(String loi) {
+        this.loi = loi;
     }
 
     public String getChiTiet() {
@@ -108,5 +114,52 @@ public class BaoCao {
 
     public void setMaKTV(String maKTV) {
         this.maKTV = maKTV;
+    }
+
+    @Override
+    public String toString() {
+        return "BaoCao{" +
+                "ma='" + ma + '\'' +
+                ", thoiGian='" + thoiGian + '\'' +
+                ", tenPhong='" + tenPhong + '\'' +
+                ", maThietBi='" + maThietBi + '\'' +
+                ", maND='" + maND + '\'' +
+                ", loi='" + loi + '\'' +
+                ", chiTiet='" + chiTiet + '\'' +
+                ", trangThai='" + trangThai + '\'' +
+                ", chuThich='" + chuThich + '\'' +
+                ", maKTV='" + maKTV + '\'' +
+                '}';
+    }
+
+    public Map<String, String> getMap(){
+
+        Map<String, String> data = new HashMap<>();
+
+        data.put("Ma", ma);
+        data.put("ThoiGian", thoiGian);
+        data.put("TenPhong", tenPhong);
+        data.put("MaThietBi", maThietBi);
+        data.put("MaND", maND);
+        data.put("Loi", loi);
+        data.put("ChiTiet", chiTiet);
+        data.put("TrangThai", trangThai);
+        data.put("ChuThich", chuThich);
+        data.put("MaKTV", maKTV);
+
+        return data;
+    }
+
+    public Date getDate() throws ParseException {
+        String[] ss = thoiGian.split(" "); //tách bỏ giờ
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+        return sdf.parse(ss[0]);
+    }
+
+    public int compareByDateTo(BaoCao baoCao) {
+        if (getThoiGian() == null || baoCao.getThoiGian() == null) {
+            return 0;
+        }
+        return getThoiGian().compareTo(baoCao.getThoiGian());
     }
 }
