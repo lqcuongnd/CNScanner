@@ -9,10 +9,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.lqcuongnd.cnscanner.Firebase.Firebase;
 import com.lqcuongnd.cnscanner.Models.NguoiDung;
 import com.lqcuongnd.cnscanner.Models.SQLite;
@@ -36,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     String              pw;
     Map<String, Object> u;
     NguoiDung           user;
+    private FirebaseFirestore   db = FirebaseFirestore.getInstance();
 
     Intent intent = null;
     Bundle bundle = null;
@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         setPalletes();
 
         setOnClick();
+
     }
 
     @Override
@@ -84,6 +85,23 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                /*DocumentReference docRef = db.collection("NGUOIDUNG").document(txtId.getText().toString());
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Toast.makeText(LoginActivity.this, "Hihihihi _ C", Toast.LENGTH_SHORT).show();
+                            } else {
+
+                            }
+                        } else {
+
+                        }
+                    }
+                });*/
+
                 imgLogo.setVisibility(View.GONE);
                 imgloadingLogo.setVisibility(View.VISIBLE);
 
@@ -99,7 +117,6 @@ public class LoginActivity extends AppCompatActivity {
                     Firebase firebase = new Firebase();
                     firebase.dangNhap(user,LoginActivity.this);
 
-                    //user.login(LoginActivity.this);
                 } else {
                     Toast.makeText(LoginActivity.this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
                 }
